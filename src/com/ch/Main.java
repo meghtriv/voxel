@@ -12,8 +12,23 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * Is responsible for handling the graphics rendering and user input in a 3D environment.
+ * It creates a Camera3D object to handle the camera movement, loads a shader and
+ * texture, and creates a World object to represent the game world. The loop method
+ * updates the camera position and renders the scene using the shader and texture.
+ * The update method handles user input and updates the world position accordingly.
+ * Finally, the render method draws the 3D model using the shader and texture.
+ */
 public class Main {
 	
+	/**
+	 * Initializes displays and GL libraries, enters an infinite loop for rendering, and
+	 * exits with a status code of 0.
+	 * 
+	 * @param args program's command-line arguments, which can be used to
+	 * customize the program's behavior when it is executed.
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +45,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * Sets up a display mode with a resolution of 1920x1080, creates a display context
+	 * with forward compatibility and VSync enabled, and prints the version of the GL library.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +60,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Initializes a 3D graphics context (GL) for rendering a 3D scene. It sets up the
+	 * camera, loads a shader, and creates a texture and a mesh for rendering.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +106,10 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Runs an infinite loop that displays a title and updates a counter every frame,
+	 * while also rendering graphics and handling keyboard input.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +132,23 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Updates an object's position based on input and transform changes, using
+	 * `processInput()` and `updatePos()`.
+	 * 
+	 * @param dt duration of time that has passed since the last update, which is used
+	 * to calculate the position of the game object based on its velocity and other factors.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * Is responsible for rendering 3D models using a renderer object `s`. It first enables
+	 * and binds the renderer, then applies transformations to the model matrices using
+	 * the `MVP` matrix, and finally draws the models.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +170,13 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * Terminates the Java application by calling the `System.exit()` method with the
+	 * specified status code, which is an integer value representing the exit code.
+	 * 
+	 * @param status exit code to be returned by the `System.exit()` method, indicating
+	 * the outcome of the program's execution.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}
